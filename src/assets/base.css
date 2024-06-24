@@ -1,0 +1,10 @@
+.app {
+  background-color: #edf0f3;
+  height: 100%;
+  position: absolute;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
