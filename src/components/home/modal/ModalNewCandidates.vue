@@ -87,7 +87,7 @@
             <div class="w-full px-3 sm:w-1/2">
               <div class="mb-5">
                 <label for="date" class="mb-3 block text-base font-medium text-[#07074D]">
-                  Date
+                  Work start date
                 </label>
                 <input
                   type="date"
@@ -165,6 +165,7 @@ export default defineComponent({
         location: this.location,
         startWorkDate: this.date,
         desiredSalary: this.salary,
+        createdAt: new Date().toISOString().split('T')[0],
         vacancyId: variables.vacancyId,
         status: (
           this.store.getStatus.find((status: { name: string }) => status.name === 'New') as {
@@ -175,6 +176,7 @@ export default defineComponent({
       }
 
       candidatesService.setcandidates(body).then(() => {
+        this.store.addCandidate(body, body.status)
         this.closeModal()
       })
     },

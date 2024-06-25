@@ -95,6 +95,7 @@ export default defineComponent({
       isAsideMobileExpanded: true
     }
   },
+
   setup() {
     return {
       searchIcon

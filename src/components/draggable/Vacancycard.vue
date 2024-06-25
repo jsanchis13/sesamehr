@@ -34,6 +34,13 @@ export default defineComponent({
     }
   },
 
+  setup() {
+    return {
+      timeIcon,
+      dotsIcon
+    }
+  },
+
   computed: {
     /**
      * Format the created date, if current date matches with the created date, return 'Hoy'
@@ -63,13 +70,6 @@ export default defineComponent({
      */
     creatorEmployee(): string {
       return this.candidate.creatorEmployee == null ? 'ATS' : this.candidate.creatorEmployee
-    }
-  },
-
-  setup() {
-    return {
-      timeIcon,
-      dotsIcon
     }
   }
 })

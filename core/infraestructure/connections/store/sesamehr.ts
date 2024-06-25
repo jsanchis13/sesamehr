@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 
 export const useSesamehrStore = defineStore('sesamehr', {
   state: () => ({
-    candidates: {} as Record<string, object>, // Add index signature
-    status: {}
+    candidates: {} as Record<string, any>,
+    status: [] as Array<any>
   }),
   getters: {
     /**
@@ -38,20 +38,29 @@ export const useSesamehrStore = defineStore('sesamehr', {
     },
 
     /**
-     * Update candidate status
+     * Add new candidate by status id
      *
+     * @param {Object} candidate
+     * @param {String} statusId
+     *
+     * @returns {void}
+     */
+    addCandidate(candidate: object, statusId: string): void {
+      this.candidates[statusId].push(candidate)
+    },
+
+    /**
+     * Update candidate status
      * @param {String} candidateId
      * @param {String} destinyStatus
-     * @param {String} oldStatus
-     *
      * @returns {Object}
      */
     updateCandidateStatus(candidateId: string, destinyStatus: string): Object {
       const candidate = this.candidates[destinyStatus].find(
-        (candidate: object) => candidate.id === candidateId
+        (candidate: { id: string }) => candidate.id === candidateId
       )
 
-      const status = this.status.find((status: object) => status.id === destinyStatus)
+      const status = this.status.find((status: any) => status.id === destinyStatus)
       candidate.statusId = destinyStatus
       candidate.status = status
 
@@ -59,11 +68,11 @@ export const useSesamehrStore = defineStore('sesamehr', {
     },
 
     /**
-     * @param {Object} status
+     * @param {Array<any>} status
      *
      * @returns {void}
      */
-    addStatus(status: object): void {
+    addStatus(status: Array<any>): void {
       this.status = status
     }
   }

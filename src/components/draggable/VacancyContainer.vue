@@ -19,7 +19,7 @@
         class="w-full h-full max-w-md"
         :id="status.id"
         group="items"
-        :list="candidates[status.id] || []"
+        :list="candidates[status.id]"
         :item-key="status.id"
         :animation="200"
         @end="updateCandidateStatus($event)"
@@ -34,6 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { storeToRefs } from 'pinia'
 import Draggable from 'vuedraggable'
 import VacancyCard from '@/components/draggable/Vacancycard.vue'
 import { candidatesService } from '@external/application/variables/services/candidates'
@@ -49,9 +50,16 @@ export default defineComponent({
   data(): any {
     return {
       statusCandidates: [],
-      candidates: {},
       status: {},
       store: useSesamehrStore()
+    }
+  },
+
+  setup() {
+    const { getCandidates } = storeToRefs(useSesamehrStore())
+
+    return {
+      candidates: getCandidates
     }
   },
 
@@ -64,7 +72,6 @@ export default defineComponent({
         candidatesService.getcandidates(status.id).then((response: any) => {
           const statusId = status.id
           this.store.addCandidates(response.data, statusId)
-          this.candidates = this.store.getCandidates
         })
       })
     })

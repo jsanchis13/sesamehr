@@ -50,6 +50,14 @@ import starIcon from '@/assets/icons/star.svg'
 
 export default defineComponent({
   name: 'NavBarItems',
+  setup() {
+    return {
+      menuItems,
+      arrowIcon,
+      starIcon
+    }
+  },
+
   methods: {
     /**
      * Toggle the visibility of the dropdown menu
@@ -61,14 +69,6 @@ export default defineComponent({
       if (this.$refs[type + itemIndex]) {
         this.$refs[type + itemIndex][itemIndex].classList.toggle('hidden')
       }
-    }
-  },
-
-  setup() {
-    return {
-      menuItems,
-      arrowIcon,
-      starIcon
     }
   }
 })
