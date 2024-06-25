@@ -53,12 +53,23 @@ export const useSesamehrStore = defineStore('sesamehr', {
      * Update candidate status
      * @param {String} candidateId
      * @param {String} destinyStatus
+     * @param {String} originalStatus
      * @returns {Object}
      */
-    updateCandidateStatus(candidateId: string, destinyStatus: string): Object {
-      const candidate = this.candidates[destinyStatus].find(
+    updateCandidateStatus(
+      candidateId: string,
+      destinyStatus: string,
+      originalStatus: string
+    ): Object {
+      const candidateInDestinySatus = this.candidates[destinyStatus].find(
         (candidate: { id: string }) => candidate.id === candidateId
       )
+      const candidateInOriginalSatus = this.candidates[originalStatus].find(
+        (candidate: { id: string }) => candidate.id === candidateId
+      )
+
+      const candidate =
+        candidateInOriginalSatus === undefined ? candidateInDestinySatus : candidateInOriginalSatus
 
       const status = this.status.find((status: any) => status.id === destinyStatus)
       candidate.statusId = destinyStatus

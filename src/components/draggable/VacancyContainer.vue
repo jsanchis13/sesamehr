@@ -22,7 +22,7 @@
         :list="candidates[status.id]"
         :item-key="status.id"
         :animation="200"
-        @end="updateCandidateStatus($event)"
+        @end="updateCandidateStatus($event, status.id)"
       >
         <template v-slot:item="{ element }">
           <vacancy-card :key="element.id" :candidate="element" />
@@ -82,13 +82,17 @@ export default defineComponent({
      * Updates the status of a candidate when dragged to a new status container.
      *
      * @param {Object} newStatus
+     * @param {string} originalStatus
      *
      * @returns void
      */
-    updateCandidateStatus(newStatus: { to: { id: string }; item: { id: string } }): void {
+    updateCandidateStatus(
+      newStatus: { to: { id: string }; item: { id: string } },
+      originalStatus: string
+    ): void {
       const destinyStatus = newStatus.to.id
       const candidateId = newStatus.item.id
-      const body = this.store.updateCandidateStatus(candidateId, destinyStatus)
+      const body = this.store.updateCandidateStatus(candidateId, destinyStatus, originalStatus)
 
       candidatesService.updatecandidate(candidateId, body)
     },
